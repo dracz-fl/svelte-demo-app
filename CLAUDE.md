@@ -97,7 +97,7 @@ The team maintains a consistent code style across the repo. The following rules 
 
 - Prefer self-documenting code over comments.
 - Use JSDoc for exported functions.
-- TODO comments must include a name and a ticket: `// TODO(priya, INC-4471): ...`
+- TODO comments must include a name and a ticket: `// TODO(priya, INC-2841): ...`
 
 ### Formatting
 
@@ -139,33 +139,9 @@ The demo-app uses a sqlite database stored at `local.db`. The schema lives in `s
 - `order_items` — line items belonging to an order (id, order_id, sku, qty, unit_price).
 - `shipments` — one row per shipment (id, order_id, status, ship_address, tracking_no).
 
-Drizzle handles migrations. To materialize the schema after editing it, run `bun run db:push`. To populate canonical seed data (eight customers, ~twelve orders, two planted bugs for the workshop), run `bun run db:seed`.
+Drizzle handles migrations. To materialize the schema after editing it, run `bun run db:push`. To populate canonical seed data, run `bun run db:seed`.
 
 The DB file is gitignored. Each engineer regenerates their own `local.db` from the seed script.
-
----
-
-## MCP server
-
-The toy MCP server lives at `demo-app/mcp/`. It exposes **two tools** that the workshop attendees register and use from their own Claude Code sessions:
-
-1. `lookupCustomerOrders(emailOrName)` — read tool. Returns the customer record together with all their orders, the line items on each order, and the shipments for each order, in one combined response.
-2. `flagOrderForReview(orderId, reason)` — write tool. Appends a single JSONL line to `demo-app/triage/flags.jsonl`. **This tool never writes to the database** — it only records the flag.
-
-Both tools are intentionally minimal. The server file is short (~30 lines) and is meant to be read end to end by attendees during the workshop.
-
----
-
-## Triage tickets
-
-Mock on-call tickets live in `demo-app/triage/*.md`, one markdown file per scenario. Each ticket has YAML frontmatter (`ticket`, `opened`, `customer_email`, `channel`) and a short narrative description of the customer complaint.
-
-The two tickets that anchor Parts 4 and 6 of the workshop are:
-
-- `triage/ticket-INC-4400.md` — a "cancelled order but the package shipped anyway" scenario.
-- `triage/ticket-INC-4471.md` — Alice Chen's "delivered to the wrong address" scenario (the capstone).
-
-Attendees use Claude Code + the toy MCP to investigate, identify the inconsistency, and call `flagOrderForReview` to record their finding.
 
 ---
 
@@ -233,25 +209,25 @@ Post in `#engineering-announcements` with the commit SHA, the rollback command, 
 
 The team keeps a running log of notable production incidents. New engineers should skim these as part of onboarding.
 
-### INC-3102 — January 2024 — Stale customer cache
+### INC-3102 — January 2024 — Connection pool exhaustion
 
-**Summary**: A misconfigured Redis TTL caused customer records to be served stale for up to four hours after an address change. Roughly 0.4% of orders shipped to the wrong address during the window.
+**Summary**: The libsql client's connection pool was configured with `maxConnections=10` in prod, inherited from a dev environment. During a traffic burst, every connection was held by long-running aggregation queries, and unrelated requests started failing with 503s for 18 minutes.
 
-**Root cause**: The cache layer was set to TTL=14400 seconds in the staging config and copied to prod without review. The intended value was 60 seconds.
+**Root cause**: Pool sizing was never tuned per environment. No telemetry surfaced pool saturation, so the failure mode was invisible until the page count spiked.
 
-**Resolution**: Hot-fixed the TTL in prod, invalidated the affected keys, and added a config-diff CI check.
+**Resolution**: Raised the pool to 64 in prod, added a saturation gauge to the Grafana dashboard, and put an alert on `pool_in_use / pool_max > 0.8`.
 
-**Lessons**: Config diffs between staging and prod now require a code-owner approval.
+**Lessons**: Connection-pool sizing belongs in env-specific config, not the shared default. Anything resource-bounded needs a saturation metric before it ships.
 
-### INC-3540 — June 2024 — Cancelled-but-shipped orders
+### INC-3540 — March 2024 — DST cutover skipped a scheduled run
 
-**Summary**: A race condition between the order-cancellation handler and the shipment-dispatch job caused 12 cancelled orders to ship anyway over a three-day window. Customers were charged but the orders were marked cancelled in the UI.
+**Summary**: Our nightly aggregation job was scheduled for 2:30 AM local. On the spring-forward weekend, 2:30 AM didn't exist; the job runner silently treated the missing instant as "no scheduled work" and skipped the run. Downstream reports showed a one-day hole that wasn't noticed until Monday.
 
-**Root cause**: The cancellation handler updated `orders.status` but did not check or update any in-flight `shipments` row. The dispatch job read its own queue, not the live orders table.
+**Root cause**: Scheduled jobs were configured in local time. The runner reported the skipped instant as a normal idle tick rather than as a missing run.
 
-**Resolution**: Added a guard in the dispatch job that re-reads `orders.status` immediately before label generation. Backfilled refunds for the affected customers.
+**Resolution**: Migrated all scheduled jobs to UTC. Added an "expected run not observed in the last N hours" alert per job.
 
-**Lessons**: Cross-entity invariants (order status vs shipment status) need either a transactional write or a guard at the read boundary.
+**Lessons**: Cron in local time bites at least twice a year. Default to UTC for anything scheduled. Surface missing runs explicitly — silent skips are worse than failures.
 
 ### INC-3877 — November 2024 — Schema migration locked production for 22 minutes
 
