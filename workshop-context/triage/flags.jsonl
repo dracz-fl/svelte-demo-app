@@ -1,1 +1,0 @@
-{"flagged_at":"2026-05-12T07:36:36.152Z","order_id":"ord-bob-001","reason":"Order cancelled but shipment ord-bob-001 is in_transit (USPS 9400110200881234567890, shipped 2026-05-04). Cross-entity invariant violation per INC-3540 pattern. Customer INC-4400 reports receiving shipping notification after cancellation; needs intercept + refund."}
