@@ -15,11 +15,6 @@
 		Internal support tooling for the workshop. Open a customer to triage their orders.
 	</div>
 
-	<nav class="topnav">
-		<a href="/">Dashboard</a>
-		<a href="/customers">All customers</a>
-	</nav>
-
 	<form method="get" class="search">
 		<label for="q">Search customers (name or email)</label>
 		<input id="q" name="q" type="text" value={data.q} placeholder="e.g. alice or @example.com" />
@@ -97,15 +92,7 @@
 		margin-bottom: 1rem;
 	}
 
-	.topnav {
-		margin-bottom: 1rem;
-	}
-
-	.topnav a {
-		margin-right: 1rem;
-	}
-
-	.search {
+.search {
 		background: #eee;
 		border: 1px solid #aaa;
 		padding: 0.5rem 0.75rem;
