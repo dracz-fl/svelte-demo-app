@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "eval-account-crossover",
+  "prompt": "Triage INC-4612: customer sees an order in their account they didn't place — shipped to an unknown Nevada address, billed to an unrecognized card. Order #ORD-19612.",
+  "assertions": [
+    {"name": "correct_priority_superimportant", "description": "Output assigns priority superimportant"},
+    {"name": "tldr_present", "description": "Output contains a TLDR section"},
+    {"name": "data_check_section", "description": "Output contains a Data check section"},
+    {"name": "two_customers_noted", "description": "Output notes that two customers are likely affected"},
+    {"name": "ticket_id_in_header", "description": "Output card header includes INC-4612"}
+  ]
+}

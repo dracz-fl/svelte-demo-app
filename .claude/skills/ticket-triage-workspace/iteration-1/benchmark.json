@@ -1,0 +1,323 @@
+{
+  "metadata": {
+    "skill_name": "ticket-triage",
+    "skill_path": "<path/to/skill>",
+    "executor_model": "<model-name>",
+    "analyzer_model": "<model-name>",
+    "timestamp": "2026-05-18T12:55:02Z",
+    "evals_run": [
+      0,
+      1,
+      2
+    ],
+    "runs_per_configuration": 3
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_superimportant",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "data_check_section",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "two_customers_noted",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_superimportant",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "data_check_section",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "systemic_impact_mentioned",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_low_or_medium",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "no_flag_called",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "next_step_routes_to_support",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_superimportant",
+          "passed": false,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "data_check_section",
+          "passed": false,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "two_customers_noted",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 0,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.6,
+        "passed": 3,
+        "failed": 2,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_superimportant",
+          "passed": false,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "data_check_section",
+          "passed": false,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "systemic_impact_mentioned",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 0.0,
+        "tokens": 0,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "correct_priority_low_or_medium",
+          "passed": false,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "tldr_present",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "no_flag_called",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "next_step_routes_to_support",
+          "passed": true,
+          "evidence": "Checked in output text"
+        },
+        {
+          "text": "ticket_id_in_header",
+          "passed": true,
+          "evidence": "Checked in output text"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 1.0,
+        "stddev": 0.0,
+        "min": 1.0,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.6667,
+        "stddev": 0.1155,
+        "min": 0.6,
+        "max": 0.8
+      },
+      "time_seconds": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "tokens": {
+        "mean": 0.0,
+        "stddev": 0.0,
+        "min": 0,
+        "max": 0
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.33",
+      "time_seconds": "+0.0",
+      "tokens": "+0"
+    }
+  },
+  "notes": []
+}

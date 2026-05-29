@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "pass_rate": 1.0,
+    "passed": 5,
+    "failed": 0,
+    "total": 5
+  },
+  "expectations": [
+    {
+      "text": "correct_priority_superimportant",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "tldr_present",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "data_check_section",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "systemic_impact_mentioned",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "ticket_id_in_header",
+      "passed": true,
+      "evidence": "Checked in output text"
+    }
+  ]
+}

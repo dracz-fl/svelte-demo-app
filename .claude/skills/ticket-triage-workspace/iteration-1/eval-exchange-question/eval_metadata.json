@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "eval-exchange-question",
+  "prompt": "Triage INC-4571: customer bought a gift shipped to sister, sister wants to exchange color. Asks if recipient can initiate exchange and whether advance exchange is possible.",
+  "assertions": [
+    {"name": "correct_priority_low_or_medium", "description": "Output assigns priority low or medium (not superimportant or ignore)"},
+    {"name": "tldr_present", "description": "Output contains a TLDR section"},
+    {"name": "no_flag_called", "description": "Output does NOT mention flagging or escalating to engineering as urgent"},
+    {"name": "next_step_routes_to_support", "description": "Next step routes to customer support or fulfillment, not engineering"},
+    {"name": "ticket_id_in_header", "description": "Output card header includes INC-4571"}
+  ]
+}

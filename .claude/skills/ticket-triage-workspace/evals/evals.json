@@ -1,0 +1,92 @@
+{
+  "skill_name": "ticket-triage",
+  "evals": [
+    {
+      "id": 0,
+      "eval_name": "eval-discount-bug",
+      "prompt": "Triage INC-4604: customer applied discount code SPRING15, UI showed -$12.30 applied, but was charged full $82.00. Reproduced in incognito. Order #ORD-20271.",
+      "expected_output": "Priority superimportant. TLDR explains silent discount failure. Mentions potential systemic impact. Data check section. flagOrderForReview called.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "correct_priority_superimportant",
+          "description": "Output assigns priority superimportant"
+        },
+        {
+          "name": "tldr_present",
+          "description": "Output contains a TLDR section"
+        },
+        {
+          "name": "data_check_section",
+          "description": "Output contains a Data check section referencing the DB lookup"
+        },
+        {
+          "name": "systemic_impact_mentioned",
+          "description": "Output notes this could affect more than just this one customer"
+        },
+        {
+          "name": "ticket_id_in_header",
+          "description": "Output card header includes INC-4604"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "eval_name": "eval-account-crossover",
+      "prompt": "Triage INC-4612: customer sees an order in their account they didn't place — shipped to an unknown Nevada address, billed to an unrecognized card. Order #ORD-19612.",
+      "expected_output": "Priority superimportant. TLDR identifies data integrity / account crossover issue. Notes two affected parties. flagOrderForReview called.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "correct_priority_superimportant",
+          "description": "Output assigns priority superimportant"
+        },
+        {
+          "name": "tldr_present",
+          "description": "Output contains a TLDR section"
+        },
+        {
+          "name": "data_check_section",
+          "description": "Output contains a Data check section"
+        },
+        {
+          "name": "two_customers_noted",
+          "description": "Output notes that two customers are likely affected (the reporter and the real order owner)"
+        },
+        {
+          "name": "ticket_id_in_header",
+          "description": "Output card header includes INC-4612"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "eval_name": "eval-exchange-question",
+      "prompt": "Triage INC-4571: customer bought a gift shipped to sister, sister wants to exchange color. Asks if recipient can initiate exchange and whether advance exchange is possible.",
+      "expected_output": "Priority low or medium (no billing error, no data issue). TLDR is concise. Next step routes to support team, no engineering escalation.",
+      "files": [],
+      "assertions": [
+        {
+          "name": "correct_priority_low_or_medium",
+          "description": "Output assigns priority low or medium (not superimportant or ignore)"
+        },
+        {
+          "name": "tldr_present",
+          "description": "Output contains a TLDR section"
+        },
+        {
+          "name": "no_flag_called",
+          "description": "Output does NOT mention flagging or escalating to engineering as urgent"
+        },
+        {
+          "name": "next_step_routes_to_support",
+          "description": "Next step routes to customer support or fulfillment, not engineering"
+        },
+        {
+          "name": "ticket_id_in_header",
+          "description": "Output card header includes INC-4571"
+        }
+      ]
+    }
+  ]
+}

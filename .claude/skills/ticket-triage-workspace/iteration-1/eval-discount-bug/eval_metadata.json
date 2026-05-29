@@ -1,0 +1,12 @@
+{
+  "eval_id": 0,
+  "eval_name": "eval-discount-bug",
+  "prompt": "Triage INC-4604: customer applied discount code SPRING15, UI showed -$12.30 applied, but was charged full $82.00. Reproduced in incognito. Order #ORD-20271.",
+  "assertions": [
+    {"name": "correct_priority_superimportant", "description": "Output assigns priority superimportant"},
+    {"name": "tldr_present", "description": "Output contains a TLDR section"},
+    {"name": "data_check_section", "description": "Output contains a Data check section referencing the DB lookup"},
+    {"name": "systemic_impact_mentioned", "description": "Output notes this could affect more than just this one customer"},
+    {"name": "ticket_id_in_header", "description": "Output card header includes INC-4604"}
+  ]
+}

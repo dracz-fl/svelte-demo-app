@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "pass_rate": 0.8,
+    "passed": 4,
+    "failed": 1,
+    "total": 5
+  },
+  "expectations": [
+    {
+      "text": "correct_priority_low_or_medium",
+      "passed": false,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "tldr_present",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "no_flag_called",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "next_step_routes_to_support",
+      "passed": true,
+      "evidence": "Checked in output text"
+    },
+    {
+      "text": "ticket_id_in_header",
+      "passed": true,
+      "evidence": "Checked in output text"
+    }
+  ]
+}
